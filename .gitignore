@@ -1,0 +1,8 @@
+.vagrant
+*.swp
+executor
+mesos-framework-tutorial
+scraper_scheduler
+scraper_executor
+executor/executor
+executor/scaper_executor
