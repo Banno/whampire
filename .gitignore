@@ -1,7 +1,5 @@
 .vagrant
 *.swp
 mesos-framework-tutorial
-scraper_scheduler
-scraper_executor
-executor/executor
-executor/scaper_executor
+whampire_scheduler
+executor/whampire_executor

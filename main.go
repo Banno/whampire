@@ -8,12 +8,12 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 
+	. "github.com/Banno/whampire/scheduler"
+	. "github.com/Banno/whampire/server"
 	log "github.com/golang/glog"
 	mesos "github.com/mesos/mesos-go/mesosproto"
 	util "github.com/mesos/mesos-go/mesosutil"
 	sched "github.com/mesos/mesos-go/scheduler"
-	. "github.com/mesosphere/mesos-framework-tutorial/scheduler"
-	. "github.com/mesosphere/mesos-framework-tutorial/server"
 )
 
 const (
@@ -27,7 +27,7 @@ var (
 	address      = flag.String("address", "127.0.0.1", "Binding address for artifact server")
 	artifactPort = flag.Int("artifactPort", defaultArtifactPort, "Binding port for artifact server")
 	master       = flag.String("master", "127.0.0.1:5050", "Master address <ip:port>")
-	executorPath = flag.String("executor", "./example_executor", "Path to test executor")
+	executorPath = flag.String("executor", "./whampire_executor", "Path to executor")
 )
 
 func init() {

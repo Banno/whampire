@@ -1,6 +1,6 @@
 build:
-	go build -o scraper_scheduler
-	cd executor && go build -o scraper_executor
+	go build -o whampire_scheduler
+	cd executor && go build -o whampire_executor
 
 run: build
-	ACCESS_KEY=<CHANGE ME> SECRET_KEY=<CHANGE ME> ./scraper_scheduler --master=127.0.0.1:5050 --executor="/home/vagrant/go/src/github.com/mesosphere/mesos-framework-tutorial/executor/scraper_executor" --logtostderr=true
+	ACCESS_KEY=$(ACCESS_KEY) SECRET_KEY=$(SECRET_KEY) ./whampire_scheduler --master=127.0.0.1:5050 --executor="./executor/whampire_executor" --logtostderr=true
