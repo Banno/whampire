@@ -80,11 +80,15 @@ func (sched *ScraperScheduler) Disconnected(sched.SchedulerDriver) {
 func (sched *ScraperScheduler) ResourceOffers(driver sched.SchedulerDriver, offers []*mesos.Offer) {
 	logOffers(offers)
 
-	if sched.tasksLaunched >= sched.totalTasks || len(sched.urls) == 0 {
-		return
-	}
+	
 
 	for _, offer := range offers {
+		if sched.tasksLaunched >= sched.totalTasks || len(sched.urls) == 0 {
+			log.Infof("Declining offer %s", offer.Id.GetValue())
+                	driver.DeclineOffer(offer.Id, &mesos.Filters{})
+			driver.Stop(false)
+			continue
+		}
 		remainingCpus := getOfferCpu(offer)
 		remainingMems := getOfferMem(offer)
 
