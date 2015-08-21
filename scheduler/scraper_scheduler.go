@@ -49,7 +49,7 @@ func NewScraperScheduler(exec *mesos.ExecutorInfo, cpuPerTask float64, memPerTas
 		case err != nil:
 			log.Fatal(err)
 		default:
-			log.Info("URI already exists %s\n", _uri)
+			log.Infof("URI already exists %s\n", _uri)
 			continue
 		}
 	}
@@ -80,13 +80,10 @@ func (sched *ScraperScheduler) Disconnected(sched.SchedulerDriver) {
 func (sched *ScraperScheduler) ResourceOffers(driver sched.SchedulerDriver, offers []*mesos.Offer) {
 	logOffers(offers)
 
-	
-
 	for _, offer := range offers {
 		if sched.tasksLaunched >= sched.totalTasks || len(sched.urls) == 0 {
 			log.Infof("Declining offer %s", offer.Id.GetValue())
-                	driver.DeclineOffer(offer.Id, &mesos.Filters{})
-			driver.Stop(false)
+			driver.DeclineOffer(offer.Id, &mesos.Filters{})
 			continue
 		}
 		remainingCpus := getOfferCpu(offer)
@@ -163,8 +160,7 @@ func (sched *ScraperScheduler) StatusUpdate(driver sched.SchedulerDriver, status
 	}
 
 	if sched.tasksFinished >= sched.totalTasks {
-		log.Infoln("Total tasks completed, stopping framework.")
-		driver.Stop(false)
+		log.Infoln("Tasks that we know about are done!")
 	}
 
 	if status.GetState() == mesos.TaskState_TASK_LOST ||

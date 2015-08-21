@@ -12,7 +12,7 @@ import (
 	"github.com/goamz/goamz/s3"
 )
 
-func downloadHTML(url string) (string, error) {
+func downloadHTML(url string) (string, string, error) {
 	tokens := strings.Split(url, "/")
 	fileName := tokens[len(tokens)-1]
 	fmt.Println("Downloading", url, "to", fileName)
@@ -20,26 +20,26 @@ func downloadHTML(url string) (string, error) {
 	output, err := os.Create(fileName)
 	if err != nil {
 		fmt.Println("Error while creating", fileName, "-", err)
-		return "", err
+		return "", "", err
 	}
 	defer output.Close()
 
 	response, err := http.Get(url)
 	if err != nil {
 		fmt.Println("Error while downloading", url, "-", err)
-		return "", err
+		return "", "", err
 	}
 	defer response.Body.Close()
 
 	n, err := io.Copy(output, response.Body)
 	if err != nil {
 		fmt.Println("Error while downloading", url, "-", err)
-		return "", err
+		return "", "", err
 	}
 
 	fmt.Println(n, "bytes downloaded.")
 
-	return fileName, nil
+	return fileName, url, nil
 }
 
 func uploadImageToS3(path string, fileName string) error {

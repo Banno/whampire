@@ -46,7 +46,7 @@ func (exec *scraperExecutor) LaunchTask(driver exec.ExecutorDriver, taskInfo *me
 
 	// Download html
 	uri := string(taskInfo.Data)
-	fileName, err := downloadHTML(uri)
+	fileName, url, err := downloadHTML(uri)
 
 	if err != nil {
 		fmt.Printf("Failed to scrape html with error: %v\n", err)
@@ -55,7 +55,7 @@ func (exec *scraperExecutor) LaunchTask(driver exec.ExecutorDriver, taskInfo *me
 	fmt.Printf("Scraped URI: %v\n", fileName)
 
 	// Upload html
-	path := base64.StdEncoding.EncodeToString([]byte(fileName))
+	path := base64.StdEncoding.EncodeToString([]byte(url))
 	fmt.Printf("Uploading html: %v\n", fileName)
 	if err = uploadImageToS3(path, fileName); err != nil {
 		fmt.Printf("Failed to upload html with error: %v\n", err)
