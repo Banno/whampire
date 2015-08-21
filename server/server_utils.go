@@ -54,7 +54,7 @@ func listUrls(c web.C, w http.ResponseWriter, r *http.Request) {
 		Results: taskUrls,
 	}
 
-	uriJson, err := json.Marshal(urlResults)
+	uriJson, err := json.MarshalIndent(urlResults, "", "     ")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,7 +88,7 @@ func listSnapshots(c web.C, w http.ResponseWriter, r *http.Request) {
 		snapshotList.Snapshots = append(snapshotList.Snapshots, snap)
 	}
 
-	uriJson, err := json.Marshal(snapshotList)
+	uriJson, err := json.MarshalIndent(snapshotList, "", "     ")
 	if err != nil {
 		log.Fatal(err)
 	}
